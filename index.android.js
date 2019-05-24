@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 
 import ColorButton from './components/ColorButton'
-
+import ColorForm from './components/ColorForm'
 export default class ColorList extends Component {
 
   constructor() {
@@ -27,11 +27,7 @@ export default class ColorList extends Component {
     const availableColors = [
       'red',
       'green',
-      'yellow',
-      'salmon',
-      'pink',
-      '#0000FF',
-      'rgba(255,0,255,.9)'
+      'yellow'
       ]
     this.state = {
       backgroundColor: 'blue',
@@ -39,12 +35,23 @@ export default class ColorList extends Component {
       dataSource: this.ds.cloneWithRows(availableColors)
     }
     this.changeColor = this.changeColor.bind(this)
+    this.newColor = this.newColor.bind(this)
   }
 
   changeColor(backgroundColor) {
     this.setState({ backgroundColor})
   }
 
+  newColor(color) {
+    const availableColors = [
+      ...this.state.availableColors,
+      color
+    ]
+    this.setState({
+      availableColors,
+      dataSource: this.ds.cloneWithRows(availableColors)
+      })
+  }
   render() {
     const { backgroundColor, dataSource } = this.state
     return (
@@ -56,7 +63,7 @@ export default class ColorList extends Component {
            onSelect={(color) => this.changeColor(color)}/>
           )}
           renderHeader={() => (
-              <Text style={styles.header}>Color List</Text>
+              <ColorForm onNewColor={this.newColor}/>
           )}>
       </ListView>
     )
