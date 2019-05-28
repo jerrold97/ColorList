@@ -82,7 +82,8 @@ export default class ColorList extends Component {
            onSelect={() => navigate('Details', {color})}/>
           )}
           renderHeader={() => (
-              <ColorForm onNewColor={this.newColor}/>
+              <ColorForm onNewColor={this.newColor}
+                navigation={this.props.navigation}/>
           )}>
       </ListView>
     )
