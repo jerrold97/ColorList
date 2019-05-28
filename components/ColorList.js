@@ -18,6 +18,9 @@ import ColorButton from './ColorButton'
 import ColorForm from './ColorForm'
 export default class ColorList extends Component {
 
+  static navigationOptions = {
+    title: 'Available Colors',
+  }
   constructor() {
     super()
 
@@ -55,8 +58,6 @@ export default class ColorList extends Component {
       )
   }
 
-
-
   newColor(color) {
     const availableColors = [
       ...this.state.availableColors,
@@ -69,14 +70,16 @@ export default class ColorList extends Component {
       this.saveColors(availableColors)
   }
   render() {
+    const { navigate } = this.props.navigation
     const { backgroundColor, dataSource } = this.state
     return (
 
       <ListView style={[styles.container,{backgroundColor}]}
+        enableEmptySections={true}
         dataSource={dataSource}
         renderRow={(color) => (
           <ColorButton backgroundColor={color}
-           onSelect={this.props.onColorSelected}/>
+           onSelect={() => navigate('Details', {color})}/>
           )}
           renderHeader={() => (
               <ColorForm onNewColor={this.newColor}/>
